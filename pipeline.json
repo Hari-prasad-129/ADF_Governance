@@ -1,0 +1,3482 @@
+{
+    "value": [
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/pipeline1",
+            "name": "pipeline1",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Wait1",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": 1
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-08-05T06:18:57Z"
+            },
+            "etag": "17003465-0000-2000-0000-62ecb6510000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/pipeline2",
+            "name": "pipeline2",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "Set variable1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "select id, Tablename,query,JSON_VALUE(PK,'$.pk_col') pk_col ,LMD,Success from Metadata",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SqlServerTable1",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "ForEach1",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('Lookup1').output.value",
+                                "type": "Expression"
+                            },
+                            "isSequential": false,
+                            "activities": [
+                                {
+                                    "name": "Data flow1",
+                                    "type": "ExecuteDataFlow",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "1.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "dataflow": {
+                                            "referenceName": "dataflow1",
+                                            "type": "DataFlowReference",
+                                            "parameters": {
+                                                "Tablename": {
+                                                    "value": "'@{item().Tablename}'",
+                                                    "type": "Expression"
+                                                },
+                                                "SQLQuery": {
+                                                    "value": "'@{item().Query}'",
+                                                    "type": "Expression"
+                                                },
+                                                "pk_col": {
+                                                    "value": "'@{item().pk_col}'",
+                                                    "type": "Expression"
+                                                }
+                                            },
+                                            "datasetParameters": {
+                                                "source1": {
+                                                    "Tablename": {
+                                                        "value": "@item().Tablename",
+                                                        "type": "Expression"
+                                                    }
+                                                },
+                                                "sink1": {}
+                                            }
+                                        },
+                                        "staging": {},
+                                        "compute": {
+                                            "coreCount": 8,
+                                            "computeType": "General"
+                                        },
+                                        "traceLevel": "Fine"
+                                    }
+                                },
+                                {
+                                    "name": "Stored procedure1",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Data flow1",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "7.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[dbo].[Success_Fail]",
+                                        "storedProcedureParameters": {
+                                            "id": {
+                                                "value": {
+                                                    "value": "@item().id",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "Int32"
+                                            },
+                                            "LMD": {
+                                                "value": {
+                                                    "value": "@variables('Time')",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "sorf": {
+                                                "value": "S",
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "SqlServer1",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                },
+                                {
+                                    "name": "Data flow1_copy1",
+                                    "type": "ExecuteDataFlow",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "1.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "dataflow": {
+                                            "referenceName": "dataflow1",
+                                            "type": "DataFlowReference",
+                                            "parameters": {
+                                                "Tablename": {
+                                                    "value": "'@{item().Tablename}'",
+                                                    "type": "Expression"
+                                                },
+                                                "SQLQuery": {
+                                                    "value": "'@{item().Query}'",
+                                                    "type": "Expression"
+                                                },
+                                                "pk_col": {
+                                                    "value": "'@{item().pk_col}'",
+                                                    "type": "Expression"
+                                                }
+                                            },
+                                            "datasetParameters": {
+                                                "source1": {
+                                                    "Tablename": {
+                                                        "value": "@item().Tablename",
+                                                        "type": "Expression"
+                                                    }
+                                                },
+                                                "sink1": {}
+                                            }
+                                        },
+                                        "staging": {},
+                                        "compute": {
+                                            "coreCount": 8,
+                                            "computeType": "General"
+                                        },
+                                        "traceLevel": "Fine"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Set variable1",
+                        "type": "SetVariable",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "variableName": "Time",
+                            "value": {
+                                "value": "@formatDateTime(utcnow(),'yyyy/MM/dd HH:mm:ss')",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "variables": {
+                    "Time": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-10-13T08:17:46Z"
+            },
+            "etag": "02003b2d-0000-2000-0000-6347c9aa0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/Demo",
+            "name": "Demo",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "copy to adls gen 2",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "DelimitedTextSource",
+                                "storeSettings": {
+                                    "type": "AzureBlobFSReadSettings",
+                                    "recursive": true,
+                                    "enablePartitionDiscovery": false
+                                },
+                                "formatSettings": {
+                                    "type": "DelimitedTextReadSettings"
+                                }
+                            },
+                            "sink": {
+                                "type": "DelimitedTextSink",
+                                "storeSettings": {
+                                    "type": "AzureBlobFSWriteSettings"
+                                },
+                                "formatSettings": {
+                                    "type": "DelimitedTextWriteSettings",
+                                    "quoteAllText": true,
+                                    "fileExtension": ".txt"
+                                }
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "src",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "dest",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Wait1",
+                        "type": "Wait",
+                        "dependsOn": [
+                            {
+                                "activity": "copy to adls gen 2",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": 1
+                        }
+                    },
+                    {
+                        "name": "Wait2",
+                        "type": "Wait",
+                        "dependsOn": [
+                            {
+                                "activity": "Wait1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": 1
+                        }
+                    },
+                    {
+                        "name": "Wait3",
+                        "type": "Wait",
+                        "dependsOn": [
+                            {
+                                "activity": "Wait2",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": 1
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-08-05T06:18:59Z"
+            },
+            "etag": "17003e65-0000-2000-0000-62ecb6530000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/pipeline3",
+            "name": "pipeline3",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "MetaData",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "DateTime",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": {
+                                    "value": "select id, Tablename,query,JSON_VALUE(PK,'$.pk_col') pk_col ,LMD,Success,LMDColName from Metadata",
+                                    "type": "Expression"
+                                },
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SqlServerTable11",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "Loop",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "MetaData",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('MetaData').output.value",
+                                "type": "Expression"
+                            },
+                            "isSequential": false,
+                            "activities": [
+                                {
+                                    "name": "Success",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "SQL to Storage",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "7.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[dbo].[Success_Fail]",
+                                        "storedProcedureParameters": {
+                                            "id": {
+                                                "value": {
+                                                    "value": "@item().id",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "Int32"
+                                            },
+                                            "LMD": {
+                                                "value": {
+                                                    "value": "@variables('Time')",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "sorf": {
+                                                "value": "S",
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "SqlServer1",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                },
+                                {
+                                    "name": "SQL to Storage",
+                                    "type": "Copy",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "7.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "source": {
+                                            "type": "SqlServerSource",
+                                            "sqlReaderQuery": {
+                                                "value": "@concat('select * from ',item().tablename ,' where ' ,item().LMDColName ,' > ' ,item().LMD,' and ', item().LMDColName ,' <= ',variables('Time'))",
+                                                "type": "Expression"
+                                            },
+                                            "queryTimeout": "02:00:00",
+                                            "partitionOption": "None"
+                                        },
+                                        "sink": {
+                                            "type": "DelimitedTextSink",
+                                            "storeSettings": {
+                                                "type": "AzureBlobStorageWriteSettings"
+                                            },
+                                            "formatSettings": {
+                                                "type": "DelimitedTextWriteSettings",
+                                                "quoteAllText": true,
+                                                "fileExtension": ".txt"
+                                            }
+                                        },
+                                        "enableStaging": false,
+                                        "translator": {
+                                            "type": "TabularTranslator",
+                                            "typeConversion": true,
+                                            "typeConversionSettings": {
+                                                "allowDataTruncation": true,
+                                                "treatBooleanAsNumber": false
+                                            }
+                                        }
+                                    },
+                                    "inputs": [
+                                        {
+                                            "referenceName": "SqlServerTable21",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "Tablename": "@item().tablename"
+                                            }
+                                        }
+                                    ],
+                                    "outputs": [
+                                        {
+                                            "referenceName": "DelimitedText1",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "Tablename": "@item().tablename"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "DateTime",
+                        "type": "SetVariable",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "variableName": "Time",
+                            "value": {
+                                "value": "@formatDateTime(utcnow(),'yyyy/MM/dd HH:mm:ss')",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "variables": {
+                    "Time": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-08-10T07:11:59Z"
+            },
+            "etag": "1f0074cb-0000-2000-0000-62f35a3f0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/pipeline4",
+            "name": "pipeline4",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy data1",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "DelimitedTextSource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "enablePartitionDiscovery": false
+                                },
+                                "formatSettings": {
+                                    "type": "DelimitedTextReadSettings",
+                                    "compressionProperties": {
+                                        "type": "ZipDeflateReadSettings"
+                                    }
+                                }
+                            },
+                            "sink": {
+                                "type": "DelimitedTextSink",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageWriteSettings"
+                                },
+                                "formatSettings": {
+                                    "type": "DelimitedTextWriteSettings",
+                                    "quoteAllText": true,
+                                    "fileExtension": ".txt"
+                                }
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "CompressFilePath",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DecompressFileDump",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-08-23T01:21:50Z"
+            },
+            "etag": "3900ea98-0000-2000-0000-63042bae0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/pipeline5",
+            "name": "pipeline5",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy data1",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "ExcelSource",
+                                "additionalColumns": [
+                                    {
+                                        "name": "deptName",
+                                        "value": {
+                                            "value": "'ABC'",
+                                            "type": "Expression"
+                                        }
+                                    }
+                                ],
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "wildcardFileName": "*.xlsx",
+                                    "enablePartitionDiscovery": false
+                                }
+                            },
+                            "sink": {
+                                "type": "SqlServerSink",
+                                "writeBehavior": "insert",
+                                "sqlWriterUseTableLock": false
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "id",
+                                            "type": "String",
+                                            "physicalType": "String"
+                                        },
+                                        "sink": {
+                                            "name": "id",
+                                            "type": "Int32",
+                                            "physicalType": "int"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "name",
+                                            "type": "String",
+                                            "physicalType": "String"
+                                        },
+                                        "sink": {
+                                            "name": "name",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "deptName",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "deptName",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        }
+                                    }
+                                ],
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "Excel1",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "SqlServerTable22",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-08-31T17:53:39Z"
+            },
+            "etag": "4d00ae49-0000-2000-0000-630fa0230000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/pipeline6",
+            "name": "pipeline6",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Wait1",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": 1
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-09-11T05:52:19Z"
+            },
+            "etag": "67000203-0000-2000-0000-631d77930000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/UpsertDataFlow_CompositeKey",
+            "name": "UpsertDataFlow_CompositeKey",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "Set variable1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": {
+                                    "value": "select id, Tablename,PK,LMD from Metadata where id=3",
+                                    "type": "Expression"
+                                },
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SqlServerTable1",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "ForEach1",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('Lookup1').output.value",
+                                "type": "Expression"
+                            },
+                            "isSequential": false,
+                            "activities": [
+                                {
+                                    "name": "Data flow1",
+                                    "type": "ExecuteDataFlow",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "1.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "dataflow": {
+                                            "referenceName": "dataflow_CompositeKey",
+                                            "type": "DataFlowReference",
+                                            "parameters": {
+                                                "pk_col": {
+                                                    "value": "'@{item().PK}'",
+                                                    "type": "Expression"
+                                                }
+                                            },
+                                            "datasetParameters": {
+                                                "source1": {
+                                                    "Tablename": {
+                                                        "value": "@item().Tablename",
+                                                        "type": "Expression"
+                                                    }
+                                                },
+                                                "sink1": {}
+                                            },
+                                            "linkedServiceParameters": {}
+                                        },
+                                        "staging": {},
+                                        "compute": {
+                                            "coreCount": 8,
+                                            "computeType": "General"
+                                        },
+                                        "traceLevel": "Fine"
+                                    }
+                                },
+                                {
+                                    "name": "Stored procedure1",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Data flow1",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "7.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[dbo].[Success_Fail]",
+                                        "storedProcedureParameters": {
+                                            "id": {
+                                                "value": {
+                                                    "value": "@item().id",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "Int32"
+                                            },
+                                            "LMD": {
+                                                "value": {
+                                                    "value": "@variables('Time')",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "sorf": {
+                                                "value": "S",
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "SqlServer1",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Set variable1",
+                        "type": "SetVariable",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "variableName": "Time",
+                            "value": {
+                                "value": "@formatDateTime(utcnow(),'yyyy/MM/dd HH:mm:ss')",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "variables": {
+                    "Time": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-09-11T06:51:52Z"
+            },
+            "etag": "6700c218-0000-2000-0000-631d85880000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/UpsertDataFlow_PrimaryKey",
+            "name": "UpsertDataFlow_PrimaryKey",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "Set variable1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "select id, Tablename,query,JSON_VALUE(PK,'$.pk_col') pk_col ,LMD,Success from Metadata",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SqlServerTable1",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "ForEach1",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('Lookup1').output.value",
+                                "type": "Expression"
+                            },
+                            "isSequential": false,
+                            "activities": [
+                                {
+                                    "name": "Data flow1",
+                                    "type": "ExecuteDataFlow",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "1.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "dataflow": {
+                                            "referenceName": "dataflow1",
+                                            "type": "DataFlowReference",
+                                            "parameters": {
+                                                "Tablename": {
+                                                    "value": "'@{item().Tablename}'",
+                                                    "type": "Expression"
+                                                },
+                                                "SQLQuery": {
+                                                    "value": "'@{item().Query}'",
+                                                    "type": "Expression"
+                                                },
+                                                "pk_col": {
+                                                    "value": "'@{item().pk_col}'",
+                                                    "type": "Expression"
+                                                }
+                                            },
+                                            "datasetParameters": {
+                                                "source1": {
+                                                    "Tablename": {
+                                                        "value": "@item().Tablename",
+                                                        "type": "Expression"
+                                                    }
+                                                },
+                                                "sink1": {}
+                                            }
+                                        },
+                                        "staging": {},
+                                        "compute": {
+                                            "coreCount": 8,
+                                            "computeType": "General"
+                                        },
+                                        "traceLevel": "Fine"
+                                    }
+                                },
+                                {
+                                    "name": "Stored procedure1",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Data flow1",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "7.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[dbo].[Success_Fail]",
+                                        "storedProcedureParameters": {
+                                            "id": {
+                                                "value": {
+                                                    "value": "@item().id",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "Int32"
+                                            },
+                                            "LMD": {
+                                                "value": {
+                                                    "value": "@variables('Time')",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "sorf": {
+                                                "value": "S",
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "SqlServer1",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Set variable1",
+                        "type": "SetVariable",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "variableName": "Time",
+                            "value": {
+                                "value": "@formatDateTime(utcnow(),'yyyy/MM/dd HH:mm:ss')",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "variables": {
+                    "Time": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-11-07T02:12:21Z"
+            },
+            "etag": "1d000fc1-0000-2000-0000-636869850000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/SuthTest",
+            "name": "SuthTest",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Data flow1",
+                        "type": "ExecuteDataFlow",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "dataflow": {
+                                "referenceName": "dataflow2",
+                                "type": "DataFlowReference",
+                                "parameters": {},
+                                "datasetParameters": {
+                                    "source1": {},
+                                    "sink1": {}
+                                }
+                            },
+                            "staging": {},
+                            "compute": {
+                                "coreCount": 8,
+                                "computeType": "General"
+                            },
+                            "traceLevel": "Fine"
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-10-13T11:20:00Z"
+            },
+            "etag": "0200a78a-0000-2000-0000-6347f4600000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/InfyFramework",
+            "name": "InfyFramework",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Start_DateTime",
+                        "type": "SetVariable",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "variableName": "DateTime",
+                            "value": {
+                                "value": "@formatDateTime(utcnow(),'yyyy/MM/dd HH:mm:ss')",
+                                "type": "Expression"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Lookup on Metatable",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "Start_DateTime",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": {
+                                    "value": "select [id],\n[load_type],\n[ApplicationName],\n[SourceType],\n[SourceDetails] as Tablename,\n[DestinationDetails_Synapse],\n[DestinationDetails_Snowflake],\n[success_failure],\n[ErrorMsg],\n[FolderPath_ParquetFiles],\n[FolderPath_DeltaTable],\n[DataFactory_Name],\n[Pipeline_Name],\n[LMD_ColumnName],\n[LMD],\n[Previous_state],\njson_value(Conditions_Y_M,'$.Condition_DB') as Condition_DB ,\njson_value(Conditions_Y_M,'$.Condition_Src') as Condition_Src,\nStart_Time,\nEnd_Time,\nInc_Flag,\ndbo.Fn_Get_Start_Time_DT() as Start_Time_DT,\ndbo.Fn_Get_End_Time_DT() as End_Time_DT,\ndbo.Fn_Get_Start_Time_Int() as Start_Time_Int,\ndbo.Fn_Get_End_Time_Int() as End_Time_Int,\n0 as Start_Time_EPOCH,\n0 as End_Time_EPOCH,\nTime_format,\nmode\nfrom\n[dbo].[Infy_Configtable]\n--where id=1\n",
+                                    "type": "Expression"
+                                },
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SqlServerTable_Infy",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "Iteration",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup on Metatable",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('Lookup on Metatable').output.value",
+                                "type": "Expression"
+                            },
+                            "batchCount": 2,
+                            "activities": [
+                                {
+                                    "name": "Copy data Src to ADLS_Parquet",
+                                    "type": "Copy",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "source": {
+                                            "type": "SqlServerSource",
+                                            "sqlReaderQuery": {
+                                                "value": "@concat( ' if (''',item().Time_format,''' = ''Integer'') begin select * from dbo.', item().tablename,' where ',item().LMD_ColumnName , ' >= ' , string(item().Start_Time_Int) ,' and ' , item().LMD_ColumnName,' <= ',string(item().End_Time_Int), ' end if (''',item().Time_format,''' = ''DateTime'') begin select * from dbo.', item().tablename,' where ',item().LMD_ColumnName , ' >= ''' , string(item().Start_Time_DT) ,''' and ' , item().LMD_ColumnName,' <= ''',string(item().End_Time_DT), ''' end if (''',item().Time_format,''' = ''Epoch'') begin select * from dbo.', item().tablename,' where ',item().LMD_ColumnName , ' >= ' , string(item().Start_Time_EPOCH) ,' and ' , item().LMD_ColumnName,' <= ',string(item().End_Time_EPOCH), ' end ' )",
+                                                "type": "Expression"
+                                            },
+                                            "queryTimeout": "02:00:00",
+                                            "partitionOption": "None"
+                                        },
+                                        "sink": {
+                                            "type": "ParquetSink",
+                                            "storeSettings": {
+                                                "type": "AzureBlobFSWriteSettings"
+                                            },
+                                            "formatSettings": {
+                                                "type": "ParquetWriteSettings"
+                                            }
+                                        },
+                                        "enableStaging": false,
+                                        "translator": {
+                                            "type": "TabularTranslator",
+                                            "typeConversion": true,
+                                            "typeConversionSettings": {
+                                                "allowDataTruncation": true,
+                                                "treatBooleanAsNumber": false
+                                            }
+                                        }
+                                    },
+                                    "inputs": [
+                                        {
+                                            "referenceName": "SqlServerTable_Infy_Parameterised",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "TableName": "@item().Tablename"
+                                            }
+                                        }
+                                    ],
+                                    "outputs": [
+                                        {
+                                            "referenceName": "Parquet_Infy",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "FolderPath": {
+                                                    "value": "@concat(item().ApplicationName,'/parquet/',substring(variables('DateTime'),0,4),'/',substring(variables('DateTime'),5,7),'/',item().SourceType,'/',item().Tablename)",
+                                                    "type": "Expression"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "Notebook Parquet to Delta",
+                                    "type": "DatabricksNotebook",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Copy data Src to ADLS_Parquet",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "notebookPath": "/INGESTION NOTEBOOK TESTING",
+                                        "baseParameters": {
+                                            "Applicationname": {
+                                                "value": "@item().ApplicationName",
+                                                "type": "Expression"
+                                            },
+                                            "tablename": {
+                                                "value": "@item().Tablename",
+                                                "type": "Expression"
+                                            },
+                                            "SourceType": {
+                                                "value": "@item().SourceType",
+                                                "type": "Expression"
+                                            },
+                                            "Year": "substring(variables('DateTime'),0,4)",
+                                            "Month": "substring(variables('DateTime'),5,7)",
+                                            "Column_name": {
+                                                "value": "@item().LMD_ColumnName",
+                                                "type": "Expression"
+                                            },
+                                            "Start_Time_Int": {
+                                                "value": "@string(item().Start_Time_Int)",
+                                                "type": "Expression"
+                                            },
+                                            "Start_Time_DT": {
+                                                "value": "@item().Start_Time_DT",
+                                                "type": "Expression"
+                                            },
+                                            "Start_Time_EPOCH": {
+                                                "value": "@string(item().Start_Time_EPOCH)",
+                                                "type": "Expression"
+                                            },
+                                            "MergeCondition": "null",
+                                            "mode": {
+                                                "value": "@item().mode",
+                                                "type": "Expression"
+                                            },
+                                            "time_format": {
+                                                "value": "@item().Time_format",
+                                                "type": "Expression"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "AzureDatabricks_Infy",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "variables": {
+                    "DateTime": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-10-31T13:36:04Z"
+            },
+            "etag": "13008c6f-0000-2000-0000-635fcf440000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/IngestionFramework",
+            "name": "IngestionFramework",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Start_DateTime",
+                        "type": "SetVariable",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "variableName": "DateTime",
+                            "value": {
+                                "value": "@formatDateTime(utcnow(),'yyyy/MM/dd HH:mm:ss')",
+                                "type": "Expression"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Lookup on Metatable",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "Start_DateTime",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": {
+                                    "value": "select a.[id],\na.[load_type],\na.[ApplicationName],\na.[SourceType],\na.[SourceDetails] as Tablename,\na.[DestinationDetails_Synapse],\na.[success_failure],\na.[ErrorMsg],\na.[FolderPath_ParquetFiles],\na.[FolderPath_DeltaTable],\na.[DataFactory_Name],\na.[Pipeline_Name],\na.[LMD_ColumnName],\na.[LMD],\na.[Previous_state],\ncast(dbo.Fn_Get_Start_End_Time('DateTime_Start_Time') as datetime) as Start_Time_DT,\ncast(dbo.Fn_Get_Start_End_Time('DateTime_End_Time') as datetime) as End_Time_DT,\ndbo.Fn_Get_Start_End_Time('Integer_Start_Time') as Start_Time_Int,\ndbo.Fn_Get_Start_End_Time('Integer_End_Time') as End_Time_Int,\n0 as Start_Time_EPOCH,\n0 as End_Time_EPOCH,\na.Time_format,\na.mode,\na.Select_Stm,\nInc_Flag,\n(select a.[id],\na.[ApplicationName],\na.[SourceDetails] as Tablename,\na.SourceType,\nyear(getdate()) as [Year],\nmonth(getdate()) as [month],\na.[LMD_ColumnName],\ndbo.Fn_Get_Start_End_Time('Integer_Start_Time') as Start_Time_Int,\ncast(dbo.Fn_Get_Start_End_Time('DateTime_End_Time') as datetime) as End_Time_DT,\n0 as Start_Time_EPOCH,\n'0' as MergeCondition,\na.mode,\na.Time_format\nfrom [Infy_Configtable] b where a.id=b.id for json auto) final_column\nfrom\n[dbo].[Infy_Configtable] a\n--where id = 1",
+                                    "type": "Expression"
+                                },
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SqlServerTable_Infy",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "Iteration",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup on Metatable",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('Lookup on Metatable').output.value",
+                                "type": "Expression"
+                            },
+                            "batchCount": 2,
+                            "activities": [
+                                {
+                                    "name": "Copy data Src to ADLS_Parquet",
+                                    "type": "Copy",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "source": {
+                                            "type": "SqlServerSource",
+                                            "sqlReaderQuery": {
+                                                "value": "@concat( \n' If(''',item().Inc_Flag,''' = ''0'')\n begin\n ', item().Select_Stm,' \n end\n \n if (''',item().Time_format,''' = ''Integer'' and ''',item().Inc_Flag,''' = ''1'') \nbegin \n', item().Select_Stm,' where ',item().LMD_ColumnName , ' >= ' , string(item().Start_Time_Int) ,' and ' , item().LMD_ColumnName,' <= ',string(item().End_Time_Int), \n' end \n\nif (''',item().Time_format,''' = ''DateTime'' and ''',item().Inc_Flag,''' = ''1'') begin ' , item().Select_Stm,' where ',item().LMD_ColumnName , ' >= ''' , string(item().Start_Time_DT) ,''' and ' , item().LMD_ColumnName,' <= ''',string(item().End_Time_DT), '''\n end \n \n if (''',item().Time_format,''' = ''Epoch'' and ''',item().Inc_Flag,''' = ''1'') begin ', item().Select_Stm,' where ',item().LMD_ColumnName , ' >= ' , string(item().Start_Time_EPOCH) ,' and ' , item().LMD_ColumnName,' <= ',string(item().End_Time_EPOCH), \n ' end ' )\n \n ",
+                                                "type": "Expression"
+                                            },
+                                            "queryTimeout": "02:00:00",
+                                            "partitionOption": "None"
+                                        },
+                                        "sink": {
+                                            "type": "ParquetSink",
+                                            "storeSettings": {
+                                                "type": "AzureBlobFSWriteSettings"
+                                            },
+                                            "formatSettings": {
+                                                "type": "ParquetWriteSettings"
+                                            }
+                                        },
+                                        "enableStaging": false,
+                                        "translator": {
+                                            "type": "TabularTranslator",
+                                            "typeConversion": true,
+                                            "typeConversionSettings": {
+                                                "allowDataTruncation": true,
+                                                "treatBooleanAsNumber": false
+                                            }
+                                        }
+                                    },
+                                    "inputs": [
+                                        {
+                                            "referenceName": "SqlServerTable_Infy_Parameterised",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "TableName": "@item().Tablename"
+                                            }
+                                        }
+                                    ],
+                                    "outputs": [
+                                        {
+                                            "referenceName": "Parquet_Infy",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "FolderPath": {
+                                                    "value": "@concat(item().ApplicationName,'/parquet/',formatDateTime(variables('DateTime'),'yyyy/MM'),'/',item().SourceType,'/',item().Tablename)",
+                                                    "type": "Expression"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "Notebook Parquet to Delta",
+                                    "type": "DatabricksNotebook",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Copy data Src to ADLS_Parquet",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "notebookPath": "/Ingestion notebook",
+                                        "baseParameters": {
+                                            "Applicationname": {
+                                                "value": "@item().ApplicationName",
+                                                "type": "Expression"
+                                            },
+                                            "tablename": {
+                                                "value": "@item().Tablename",
+                                                "type": "Expression"
+                                            },
+                                            "SourceType": {
+                                                "value": "@item().SourceType",
+                                                "type": "Expression"
+                                            },
+                                            "Year": {
+                                                "value": "@formatDateTime(variables('DateTime'),'yyyy')",
+                                                "type": "Expression"
+                                            },
+                                            "Month": {
+                                                "value": "@formatDateTime(variables('DateTime'),'MM')",
+                                                "type": "Expression"
+                                            },
+                                            "Column_name": {
+                                                "value": "@item().LMD_ColumnName",
+                                                "type": "Expression"
+                                            },
+                                            "Start_Time_Int": {
+                                                "value": "@string(item().Start_Time_Int)",
+                                                "type": "Expression"
+                                            },
+                                            "Start_Time_DT": {
+                                                "value": "@item().Start_Time_DT",
+                                                "type": "Expression"
+                                            },
+                                            "Start_Time_EPOCH": {
+                                                "value": "@string(item().Start_Time_EPOCH)",
+                                                "type": "Expression"
+                                            },
+                                            "MergeCondition": "null",
+                                            "Mode": {
+                                                "value": "@item().mode",
+                                                "type": "Expression"
+                                            },
+                                            "Time_Format": {
+                                                "value": "@item().Time_format",
+                                                "type": "Expression"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "AzureDatabricks_Infy",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "variables": {
+                    "DateTime": {
+                        "type": "String"
+                    }
+                },
+                "folder": {
+                    "name": "Infosys"
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-11-07T02:15:43Z"
+            },
+            "etag": "1d005ec2-0000-2000-0000-63686a4f0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/TransformationAndLoadingPipeline",
+            "name": "TransformationAndLoadingPipeline",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Notebook Delta Transformation",
+                        "type": "DatabricksNotebook",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "notebookPath": "/Users/anamika.sar@datasturdy.com/Test Notebook Infy",
+                            "baseParameters": {
+                                "Applicationname": {
+                                    "value": "@item().ApplicationName",
+                                    "type": "Expression"
+                                },
+                                "tablename": {
+                                    "value": "@item().Tablename",
+                                    "type": "Expression"
+                                },
+                                "SourceType": {
+                                    "value": "@item().SourceType",
+                                    "type": "Expression"
+                                },
+                                "Year": "substring(variables('DateTime'),0,4)",
+                                "Month": "substring(variables('DateTime'),5,7)",
+                                "Column_name": {
+                                    "value": "@item().LMD_ColumnName",
+                                    "type": "Expression"
+                                },
+                                "Start_Time_Int": {
+                                    "value": "@string(item().Start_Time_Int)",
+                                    "type": "Expression"
+                                },
+                                "Start_Time_DT": {
+                                    "value": "@item().Start_Time_DT",
+                                    "type": "Expression"
+                                },
+                                "Start_Time_EPOCH": {
+                                    "value": "@string(item().Start_Time_EPOCH)",
+                                    "type": "Expression"
+                                },
+                                "MergeCondition": "null",
+                                "mode": {
+                                    "value": "@item().mode",
+                                    "type": "Expression"
+                                },
+                                "time_format": {
+                                    "value": "@item().Time_format",
+                                    "type": "Expression"
+                                }
+                            }
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "AzureDatabricks_Infy",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "folder": {
+                    "name": "Infosys"
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-11-01T14:20:57Z"
+            },
+            "etag": "15009501-0000-2000-0000-63612b490000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/pipeline7",
+            "name": "pipeline7",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Wait1",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": 1
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-11-04T06:18:39Z"
+            },
+            "etag": "1900127b-0000-2000-0000-6364aebf0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/IngestionPipeline",
+            "name": "IngestionPipeline",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Start_DateTime",
+                        "type": "SetVariable",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "variableName": "DateTime",
+                            "value": {
+                                "value": "@formatDateTime(utcnow(),'yyyy/MM/dd HH:mm:ss')",
+                                "type": "Expression"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Lookup on Metatable",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "Start_DateTime",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": {
+                                    "value": "select \nid\n,load_type\n,ApplicationName\n,SourceType\n,json_value(SourceDetails,'$.ServerName') as SrcServername\n,json_value(SourceDetails,'$.DatabaseName') as SrcDatabasename\n,json_value(SourceDetails,'$.SchemaName') as SrcSchemaname\n,json_value(SourceDetails,'$.TableName') as Tablename\n,json_value(SourceDetails,'$.src_query') as src_query\n,json_value(DestinationDetails,'$.ServerName') as DestServername\n,json_value(DestinationDetails,'$.DatabaseName') as DestDatabasename\n,json_value(DestinationDetails,'$.SchemaName') as DestSchemaname\n,json_value(DestinationDetails,'$.TableName') as DestTablename\n,json_value(PrimaryKey,'$.PK1') as PK1\n,PKFlag\n,conditions\n,Success_Failure\n,ErrorMsg\n,folderpath\n,DataFactory_Name\n,Pipeline_Name\n,json_value(LMD_ColumnName,'$.Ins') as Ins\n,json_value(LMD_ColumnName,'$.Upd1') as Upd1\n,json_value(LMD_ColumnName,'$.Upd2') as Upd2\n,json_value(LMD_ColumnName,'$.Upd3') as Upd3\n,LMD\nfrom Config_Table \n",
+                                    "type": "Expression"
+                                },
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SqlServerTable_Infy",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "Iteration",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup on Metatable",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('Lookup on Metatable').output.value",
+                                "type": "Expression"
+                            },
+                            "batchCount": 2,
+                            "activities": [
+                                {
+                                    "name": "Copy data Src to ADLS_Parquet",
+                                    "type": "Copy",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "source": {
+                                            "type": "SqlServerSource",
+                                            "sqlReaderQuery": {
+                                                "value": "@concat(item().src_query,' where ',item().LMD_ColumnName , ' >= ' , string(item().Start_Time_Int) ,' and ' , item().LMD_ColumnName,' <= ',string(item().End_Time_Int))",
+                                                "type": "Expression"
+                                            },
+                                            "queryTimeout": "02:00:00",
+                                            "partitionOption": "None"
+                                        },
+                                        "sink": {
+                                            "type": "ParquetSink",
+                                            "storeSettings": {
+                                                "type": "AzureBlobFSWriteSettings"
+                                            },
+                                            "formatSettings": {
+                                                "type": "ParquetWriteSettings"
+                                            }
+                                        },
+                                        "enableStaging": false,
+                                        "translator": {
+                                            "type": "TabularTranslator",
+                                            "typeConversion": true,
+                                            "typeConversionSettings": {
+                                                "allowDataTruncation": true,
+                                                "treatBooleanAsNumber": false
+                                            }
+                                        }
+                                    },
+                                    "inputs": [
+                                        {
+                                            "referenceName": "SqlServerTable_Infy_Parameterised",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "TableName": "@item().Tablename"
+                                            }
+                                        }
+                                    ],
+                                    "outputs": [
+                                        {
+                                            "referenceName": "Parquet_Infy",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "FolderPath": {
+                                                    "value": "@concat(item().ApplicationName,'/parquet/',formatDateTime(variables('DateTime'),'yyyy/MM'),'/',item().SourceType,'/',item().Tablename)",
+                                                    "type": "Expression"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "Success",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Copy data Src to ADLS_Parquet",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[dbo].[USP_update_status]",
+                                        "storedProcedureParameters": {
+                                            "ApplicationName": {
+                                                "value": {
+                                                    "value": "@item().ApplicationName",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "DataFactory_Name": {
+                                                "value": {
+                                                    "value": "@pipeline().DataFactory",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "error_msg_to_adls": {
+                                                "value": "Success",
+                                                "type": "String"
+                                            },
+                                            "error_msg_to_Dest": {
+                                                "value": "Success",
+                                                "type": "String"
+                                            },
+                                            "FolderPath_DeltaTable": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "FolderPath_ParquetFiles": {
+                                                "value": {
+                                                    "value": "@concat(item().ApplicationName,'/parquet/',formatDateTime(variables('DateTime'),'yyyy/MM'),'/',item().SourceType,'/',item().Tablename)",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "id": {
+                                                "value": "@item().id",
+                                                "type": "Int32"
+                                            },
+                                            "load_type": {
+                                                "value": "@item().lody_type",
+                                                "type": "String"
+                                            },
+                                            "Pipeline_Name": {
+                                                "value": {
+                                                    "value": "@pipeline().Pipeline",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "rowcount_to_adls": {
+                                                "value": "@{activity('Copy data Src to ADLS_Parquet').output.rowsCopied}",
+                                                "type": "String"
+                                            },
+                                            "rowcount_to_Dest": {
+                                                "value": "@{activity('Copy data Src to ADLS_Parquet').output.rowsCopied}",
+                                                "type": "String"
+                                            },
+                                            "RunId": {
+                                                "value": {
+                                                    "value": "@pipeline().RunId",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "Size_Of_Data": {
+                                                "value": "@{activity('Copy data Src to ADLS_Parquet).output.dataWritten}",
+                                                "type": "String"
+                                            },
+                                            "sorf": {
+                                                "value": "S",
+                                                "type": "String"
+                                            },
+                                            "SourceType": {
+                                                "value": "@item().SourceType",
+                                                "type": "String"
+                                            },
+                                            "StartTime": {
+                                                "value": {
+                                                    "value": "@variables('DateTime')",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "DateTime"
+                                            },
+                                            "tablename": {
+                                                "value": "@item().tablename",
+                                                "type": "String"
+                                            },
+                                            "Time_format": {
+                                                "value": "@item().Time_format",
+                                                "type": "String"
+                                            },
+                                            "TimeTaken_to_adls": {
+                                                "value": "@{activity('Copy data Src to ADLS_Parquet').output.copyDuration}",
+                                                "type": "String"
+                                            },
+                                            "TimeTaken_to_dest": {
+                                                "value": null,
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "SqlServer_Infy",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                },
+                                {
+                                    "name": "Failure",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Copy data Src to ADLS_Parquet",
+                                            "dependencyConditions": [
+                                                "Failed"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[dbo].[USP_update_status]",
+                                        "storedProcedureParameters": {
+                                            "ApplicationName": {
+                                                "value": {
+                                                    "value": "@item().ApplicationName",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "DataFactory_Name": {
+                                                "value": {
+                                                    "value": "@pipeline().DataFactory",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "error_msg_to_adls": {
+                                                "value": "@{activity('Copy data Src to ADLS_Parquet').output.errors[0].Message}",
+                                                "type": "String"
+                                            },
+                                            "error_msg_to_Dest": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "FolderPath_DeltaTable": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "FolderPath_ParquetFiles": {
+                                                "value": {
+                                                    "value": "@concat(item().ApplicationName,'/parquet/',formatDateTime(variables('DateTime'),'yyyy/MM'),'/',item().SourceType,'/',item().Tablename)",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "id": {
+                                                "value": "@item().id",
+                                                "type": "Int32"
+                                            },
+                                            "load_type": {
+                                                "value": "@item().lody_type",
+                                                "type": "String"
+                                            },
+                                            "Pipeline_Name": {
+                                                "value": {
+                                                    "value": "@pipeline().Pipeline",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "rowcount_to_adls": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "rowcount_to_Dest": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "RunId": {
+                                                "value": {
+                                                    "value": "@pipeline().RunId",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "Size_Of_Data": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "sorf": {
+                                                "value": "F",
+                                                "type": "String"
+                                            },
+                                            "SourceType": {
+                                                "value": "@item().SourceType",
+                                                "type": "String"
+                                            },
+                                            "StartTime": {
+                                                "value": {
+                                                    "value": "@variables('DateTime')",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "DateTime"
+                                            },
+                                            "tablename": {
+                                                "value": "@item().tablename",
+                                                "type": "String"
+                                            },
+                                            "Time_format": {
+                                                "value": "@item().Time_format",
+                                                "type": "String"
+                                            },
+                                            "TimeTaken_to_adls": {
+                                                "value": "@{activity('Copy data Src to ADLS_Parquet').output.copyDuration}",
+                                                "type": "String"
+                                            },
+                                            "TimeTaken_to_dest": {
+                                                "value": null,
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "SqlServer_Infy",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "variables": {
+                    "DateTime": {
+                        "type": "String"
+                    }
+                },
+                "folder": {
+                    "name": "Infosys"
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-11-06T03:07:09Z"
+            },
+            "etag": "1c006c6c-0000-2000-0000-636724dd0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/pipeline8",
+            "name": "pipeline8",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Meta tables",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT * FROM metastore.configtable WHERE id = 1",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "mll_meta_table_ds_sqlserver_training",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "ForEach",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "Meta tables",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('Meta tables').output.value",
+                                "type": "Expression"
+                            },
+                            "activities": [
+                                {
+                                    "name": "Append Destination Table Name",
+                                    "type": "AppendVariable",
+                                    "dependsOn": [],
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "variableName": "destinationTable",
+                                        "value": {
+                                            "value": "@json(item().DestinationDetails).tablename",
+                                            "type": "Expression"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "Append Source LMD",
+                                    "type": "AppendVariable",
+                                    "dependsOn": [],
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "variableName": "sourceLMD",
+                                        "value": {
+                                            "value": "@json(item().SourceDetails).lmd",
+                                            "type": "Expression"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "If Condition1",
+                                    "type": "IfCondition",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Append Destination Table Name",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        {
+                                            "activity": "Append Destination Schema",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        {
+                                            "activity": "Append Source LMD",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "expression": {
+                                            "value": "@equals(variables('destinationTable'),'challan')",
+                                            "type": "Expression"
+                                        },
+                                        "ifTrueActivities": [
+                                            {
+                                                "name": "Copy data from challan tbl to CSV",
+                                                "type": "Copy",
+                                                "dependsOn": [],
+                                                "policy": {
+                                                    "timeout": "0.12:00:00",
+                                                    "retry": 0,
+                                                    "retryIntervalInSeconds": 30,
+                                                    "secureOutput": false,
+                                                    "secureInput": false
+                                                },
+                                                "userProperties": [],
+                                                "typeProperties": {
+                                                    "source": {
+                                                        "type": "SqlServerSource",
+                                                        "sqlReaderQuery": {
+                                                            "value": "@concat('SELECT * FROM [',variables('destinationSchema'),'],[',variables('destinationTable'),' WHERE ',variables('sourceLMD'),' >= DATEADD(YEAR,-1,GETDATE()) and ',variables('sourceLMD'), ' < GETDATE()')",
+                                                            "type": "Expression"
+                                                        },
+                                                        "queryTimeout": "02:00:00",
+                                                        "partitionOption": "None"
+                                                    },
+                                                    "sink": {
+                                                        "type": "DelimitedTextSink",
+                                                        "storeSettings": {
+                                                            "type": "AzureBlobFSWriteSettings"
+                                                        },
+                                                        "formatSettings": {
+                                                            "type": "DelimitedTextWriteSettings",
+                                                            "quoteAllText": true,
+                                                            "fileExtension": ".txt"
+                                                        }
+                                                    },
+                                                    "enableStaging": false,
+                                                    "translator": {
+                                                        "type": "TabularTranslator",
+                                                        "typeConversion": true,
+                                                        "typeConversionSettings": {
+                                                            "allowDataTruncation": true,
+                                                            "treatBooleanAsNumber": false
+                                                        }
+                                                    }
+                                                },
+                                                "inputs": [
+                                                    {
+                                                        "referenceName": "mll_source_ds_sqlserver_training",
+                                                        "type": "DatasetReference",
+                                                        "parameters": {}
+                                                    }
+                                                ],
+                                                "outputs": [
+                                                    {
+                                                        "referenceName": "ds_blob_csv_training",
+                                                        "type": "DatasetReference",
+                                                        "parameters": {}
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "Append Destination Schema",
+                                    "type": "AppendVariable",
+                                    "dependsOn": [],
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "variableName": "destinationTable",
+                                        "value": {
+                                            "value": "@json(item().DestinationDetails).schemaname",
+                                            "type": "Expression"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "variables": {
+                    "sourceDetails": {
+                        "type": "Array"
+                    },
+                    "destinationDetails": {
+                        "type": "Array"
+                    },
+                    "sourceTableName": {
+                        "type": "Array"
+                    },
+                    "sourceLMD": {
+                        "type": "Array"
+                    },
+                    "destinationTable": {
+                        "type": "Array"
+                    },
+                    "destinationSchema": {
+                        "type": "Array"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-11-06T13:06:45Z"
+            },
+            "etag": "1c0093fa-0000-2000-0000-6367b1650000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/IngestionFramework_1",
+            "name": "IngestionFramework_1",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Start_DateTime",
+                        "type": "SetVariable",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "variableName": "DateTime",
+                            "value": {
+                                "value": "@formatDateTime(utcnow(),'yyyy/MM/dd HH:mm:ss')",
+                                "type": "Expression"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Lookup on Metatable",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "Start_DateTime",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": {
+                                    "value": "select a.[id],\na.[load_type],\na.[ApplicationName],\na.[SourceType],\na.[SourceDetails] as Tablename,\na.[DestinationDetails_Synapse],\na.[success_failure],\na.[ErrorMsg],\na.[FolderPath_ParquetFiles],\na.[FolderPath_DeltaTable],\na.[DataFactory_Name],\na.[Pipeline_Name],\na.[LMD_ColumnName],\na.[LMD],\na.[Previous_state],\ncast(dbo.Fn_Get_Start_End_Time('DateTime_Start_Time') as datetime) as Start_Time_DT,\ncast(dbo.Fn_Get_Start_End_Time('DateTime_End_Time') as datetime) as End_Time_DT,\ndbo.Fn_Get_Start_End_Time('Integer_Start_Time') as Start_Time_Int,\ndbo.Fn_Get_Start_End_Time('Integer_End_Time') as End_Time_Int,\n0 as Start_Time_EPOCH,\n0 as End_Time_EPOCH,\na.Time_format,\na.mode,\na.Select_Stm,\nInc_Flag,\n(select a.[id],\na.[ApplicationName],\na.[SourceDetails] as Tablename,\na.SourceType,\nyear(getdate()) as [Year],\nmonth(getdate()) as [month],\na.[LMD_ColumnName],\ndbo.Fn_Get_Start_End_Time('Integer_Start_Time') as Start_Time_Int,\ncast(dbo.Fn_Get_Start_End_Time('DateTime_End_Time') as datetime) as End_Time_DT,\n0 as Start_Time_EPOCH,\n'0' as MergeCondition,\na.mode,\na.Time_format\nfrom [Infy_Configtable] b where a.id=b.id for json auto) final_column\nfrom\n[dbo].[Infy_Configtable] a\n--where id = 1",
+                                    "type": "Expression"
+                                },
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SqlServerTable_Infy",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "Iteration",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup on Metatable",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('Lookup on Metatable').output.value",
+                                "type": "Expression"
+                            },
+                            "batchCount": 2,
+                            "activities": [
+                                {
+                                    "name": "Copy data Src to ADLS_Parquet",
+                                    "type": "Copy",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "source": {
+                                            "type": "SqlServerSource",
+                                            "sqlReaderQuery": {
+                                                "value": "@concat( \n' If(''',item().Inc_Flag,''' = ''0'')\n begin\n ', item().Select_Stm,' \n end\n \n if (''',item().Time_format,''' = ''Integer'' and ''',item().Inc_Flag,''' = ''1'') \nbegin \n', item().Select_Stm,' where ',item().LMD_ColumnName , ' >= ' , string(item().Start_Time_Int) ,' and ' , item().LMD_ColumnName,' <= ',string(item().End_Time_Int), \n' end \n\nif (''',item().Time_format,''' = ''DateTime'' and ''',item().Inc_Flag,''' = ''1'') begin ' , item().Select_Stm,' where ',item().LMD_ColumnName , ' >= ''' , string(item().Start_Time_DT) ,''' and ' , item().LMD_ColumnName,' <= ''',string(item().End_Time_DT), '''\n end \n \n if (''',item().Time_format,''' = ''Epoch'' and ''',item().Inc_Flag,''' = ''1'') begin ', item().Select_Stm,' where ',item().LMD_ColumnName , ' >= ' , string(item().Start_Time_EPOCH) ,' and ' , item().LMD_ColumnName,' <= ',string(item().End_Time_EPOCH), \n ' end ' )\n \n ",
+                                                "type": "Expression"
+                                            },
+                                            "queryTimeout": "02:00:00",
+                                            "partitionOption": "None"
+                                        },
+                                        "sink": {
+                                            "type": "ParquetSink",
+                                            "storeSettings": {
+                                                "type": "AzureBlobFSWriteSettings"
+                                            },
+                                            "formatSettings": {
+                                                "type": "ParquetWriteSettings"
+                                            }
+                                        },
+                                        "enableStaging": false,
+                                        "translator": {
+                                            "type": "TabularTranslator",
+                                            "typeConversion": true,
+                                            "typeConversionSettings": {
+                                                "allowDataTruncation": true,
+                                                "treatBooleanAsNumber": false
+                                            }
+                                        }
+                                    },
+                                    "inputs": [
+                                        {
+                                            "referenceName": "SqlServerTable_Infy_Parameterised",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "TableName": "@item().Tablename"
+                                            }
+                                        }
+                                    ],
+                                    "outputs": [
+                                        {
+                                            "referenceName": "Parquet_Infy",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "FolderPath": {
+                                                    "value": "@concat(item().ApplicationName,'/parquet/',formatDateTime(variables('DateTime'),'yyyy/MM'),'/',item().SourceType,'/',item().Tablename)",
+                                                    "type": "Expression"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "Notebook Parquet to Delta",
+                                    "type": "DatabricksNotebook",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Copy data Src to ADLS_Parquet",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "notebookPath": "/Ingestion notebook",
+                                        "baseParameters": {
+                                            "Applicationname": {
+                                                "value": "@item().ApplicationName",
+                                                "type": "Expression"
+                                            },
+                                            "tablename": {
+                                                "value": "@item().Tablename",
+                                                "type": "Expression"
+                                            },
+                                            "SourceType": {
+                                                "value": "@item().SourceType",
+                                                "type": "Expression"
+                                            },
+                                            "Year": {
+                                                "value": "@formatDateTime(variables('DateTime'),'yyyy')",
+                                                "type": "Expression"
+                                            },
+                                            "Month": {
+                                                "value": "@formatDateTime(variables('DateTime'),'MM')",
+                                                "type": "Expression"
+                                            },
+                                            "Column_name": {
+                                                "value": "@item().LMD_ColumnName",
+                                                "type": "Expression"
+                                            },
+                                            "Start_Time_Int": {
+                                                "value": "@string(item().Start_Time_Int)",
+                                                "type": "Expression"
+                                            },
+                                            "Start_Time_DT": {
+                                                "value": "@item().Start_Time_DT",
+                                                "type": "Expression"
+                                            },
+                                            "Start_Time_EPOCH": {
+                                                "value": "@string(item().Start_Time_EPOCH)",
+                                                "type": "Expression"
+                                            },
+                                            "MergeCondition": "null",
+                                            "Mode": {
+                                                "value": "@item().mode",
+                                                "type": "Expression"
+                                            },
+                                            "Time_Format": {
+                                                "value": "@item().Time_format",
+                                                "type": "Expression"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "AzureDatabricks_Infy",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                },
+                                {
+                                    "name": "Success",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Notebook Parquet to Delta",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        {
+                                            "activity": "Copy data Src to ADLS_Parquet",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[dbo].[USP_update_status]",
+                                        "storedProcedureParameters": {
+                                            "ApplicationName": {
+                                                "value": {
+                                                    "value": "@item().ApplicationName",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "DataFactory_Name": {
+                                                "value": {
+                                                    "value": "@pipeline().DataFactory",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "error_msg_to_adls": {
+                                                "value": "Success",
+                                                "type": "String"
+                                            },
+                                            "error_msg_to_Dest": {
+                                                "value": "Success",
+                                                "type": "String"
+                                            },
+                                            "FolderPath_DeltaTable": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "FolderPath_ParquetFiles": {
+                                                "value": {
+                                                    "value": "@concat(item().ApplicationName,'/parquet/',formatDateTime(variables('DateTime'),'yyyy/MM'),'/',item().SourceType,'/',item().Tablename)",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "id": {
+                                                "value": {
+                                                    "value": "@item().id",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "Int32"
+                                            },
+                                            "load_type": {
+                                                "value": {
+                                                    "value": "@item().load_type",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "Pipeline_Name": {
+                                                "value": {
+                                                    "value": "@pipeline().Pipeline",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "rowcount_to_adls": {
+                                                "value": {
+                                                    "value": "@{activity('Copy data Src to ADLS_Parquet').output.rowsCopied}",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "rowcount_to_Dest": {
+                                                "value": {
+                                                    "value": "@{activity('Copy data Src to ADLS_Parquet').output.rowsCopied}",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "RunId": {
+                                                "value": {
+                                                    "value": "@pipeline().RunId",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "Size_Of_Data": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "sorf": {
+                                                "value": "S",
+                                                "type": "String"
+                                            },
+                                            "SourceType": {
+                                                "value": {
+                                                    "value": "@item().SourceType",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "StartTime": {
+                                                "value": {
+                                                    "value": "@variables('DateTime')",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "DateTime"
+                                            },
+                                            "tablename": {
+                                                "value": {
+                                                    "value": "@item().tablename",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "Time_format": {
+                                                "value": {
+                                                    "value": "@item().Time_format",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "TimeTaken_to_adls": {
+                                                "value": {
+                                                    "value": "@{activity('Copy data Src to ADLS_Parquet').output.copyDuration}",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "TimeTaken_to_dest": {
+                                                "value": null,
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "SqlServer_Infy",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                },
+                                {
+                                    "name": "Notebook_Fail",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Notebook Parquet to Delta",
+                                            "dependencyConditions": [
+                                                "Failed"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[dbo].[USP_update_status]",
+                                        "storedProcedureParameters": {
+                                            "ApplicationName": {
+                                                "value": {
+                                                    "value": "@item().ApplicationName",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "DataFactory_Name": {
+                                                "value": {
+                                                    "value": "@pipeline().DataFactory",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "error_msg_to_adls": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "error_msg_to_Dest": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "FolderPath_DeltaTable": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "FolderPath_ParquetFiles": {
+                                                "value": {
+                                                    "value": "@concat(item().ApplicationName,'/parquet/',formatDateTime(variables('DateTime'),'yyyy/MM'),'/',item().SourceType,'/',item().Tablename)",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "id": {
+                                                "value": {
+                                                    "value": "@item().id",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "Int32"
+                                            },
+                                            "load_type": {
+                                                "value": {
+                                                    "value": "@item().load_type",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "Pipeline_Name": {
+                                                "value": {
+                                                    "value": "@pipeline().Pipeline",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "rowcount_to_adls": {
+                                                "value": {
+                                                    "value": "@{activity('Copy data Src to ADLS_Parquet').output.rowsCopied}",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "rowcount_to_Dest": {
+                                                "value": {
+                                                    "value": "@{activity('Copy data Src to ADLS_Parquet').output.rowsCopied}",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "RunId": {
+                                                "value": {
+                                                    "value": "@pipeline().RunId",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "Size_Of_Data": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "sorf": {
+                                                "value": "S",
+                                                "type": "String"
+                                            },
+                                            "SourceType": {
+                                                "value": {
+                                                    "value": "@item().SourceType",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "StartTime": {
+                                                "value": {
+                                                    "value": "@variables('DateTime')",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "DateTime"
+                                            },
+                                            "tablename": {
+                                                "value": {
+                                                    "value": "@item().tablename",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "Time_format": {
+                                                "value": {
+                                                    "value": "@item().Time_format",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "TimeTaken_to_adls": {
+                                                "value": {
+                                                    "value": "@{activity('Copy data Src to ADLS_Parquet').output.copyDuration}",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "TimeTaken_to_dest": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "error_msg_to_delta": {
+                                                "value": {
+                                                    "value": "@{activity('Notebook Parquet to Delta').output.runError}",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "SqlServer_Infy",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                },
+                                {
+                                    "name": "Copy_Fail",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Copy data Src to ADLS_Parquet",
+                                            "dependencyConditions": [
+                                                "Failed"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[dbo].[USP_update_status]",
+                                        "storedProcedureParameters": {
+                                            "ApplicationName": {
+                                                "value": {
+                                                    "value": "@item().ApplicationName",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "DataFactory_Name": {
+                                                "value": {
+                                                    "value": "@pipeline().DataFactory",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "error_msg_to_adls": {
+                                                "value": {
+                                                    "value": "@{activity('Copy data Src to ADLS_Parquet').output.errors[0].Message}",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "error_msg_to_Dest": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "FolderPath_DeltaTable": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "FolderPath_ParquetFiles": {
+                                                "value": {
+                                                    "value": "@concat(item().ApplicationName,'/parquet/',formatDateTime(variables('DateTime'),'yyyy/MM'),'/',item().SourceType,'/',item().Tablename)",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "id": {
+                                                "value": {
+                                                    "value": "@item().id",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "Int32"
+                                            },
+                                            "load_type": {
+                                                "value": {
+                                                    "value": "@item().load_type",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "Pipeline_Name": {
+                                                "value": {
+                                                    "value": "@pipeline().Pipeline",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "rowcount_to_adls": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "rowcount_to_Dest": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "RunId": {
+                                                "value": {
+                                                    "value": "@pipeline().RunId",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "Size_Of_Data": {
+                                                "value": null,
+                                                "type": "String"
+                                            },
+                                            "sorf": {
+                                                "value": "F",
+                                                "type": "String"
+                                            },
+                                            "SourceType": {
+                                                "value": {
+                                                    "value": "@item().SourceType",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "StartTime": {
+                                                "value": {
+                                                    "value": "@variables('DateTime')",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "DateTime"
+                                            },
+                                            "tablename": {
+                                                "value": {
+                                                    "value": "@item().tablename",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "Time_format": {
+                                                "value": {
+                                                    "value": "@item().Time_format",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "TimeTaken_to_adls": {
+                                                "value": {
+                                                    "value": "@{activity('Copy data Src to ADLS_Parquet').output.copyDuration}",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "TimeTaken_to_dest": {
+                                                "value": null,
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "SqlServer_Infy",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "variables": {
+                    "DateTime": {
+                        "type": "String"
+                    }
+                },
+                "folder": {
+                    "name": "Infosys"
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-11-07T02:15:43Z"
+            },
+            "etag": "1d005fc2-0000-2000-0000-63686a4f0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/pipeline9",
+            "name": "pipeline9",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "training_data_flow_pipeline",
+                        "type": "ExecuteDataFlow",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "dataflow": {
+                                "referenceName": "trainingDataFlow",
+                                "type": "DataFlowReference",
+                                "parameters": {},
+                                "datasetParameters": {
+                                    "source1": {},
+                                    "sink1": {}
+                                },
+                                "linkedServiceParameters": {}
+                            },
+                            "staging": {},
+                            "compute": {
+                                "coreCount": 8,
+                                "computeType": "General"
+                            },
+                            "traceLevel": "Fine"
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-11-09T06:44:49Z"
+            },
+            "etag": "21004b64-0000-2000-0000-636b4c610000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/pipelines/IngestionPipeline1",
+            "name": "IngestionPipeline1",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "StartTime",
+                        "type": "SetVariable",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "variableName": "DateTime",
+                            "value": {
+                                "value": "@formatDateTime(utcnow(),'yyyy-MM-dd HH:mm:ss')",
+                                "type": "Expression"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Lookup on Metatable",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "StartTime",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": {
+                                    "value": "select \nid,DatabaseName,TableName,TableStatus,LMD2,LMD_ColumnName,PK\nfrom DataBricksMetaData \n",
+                                    "type": "Expression"
+                                },
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SqlServerTable_Infy1",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "Iteration",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup on Metatable",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('Lookup on Metatable').output.value",
+                                "type": "Expression"
+                            },
+                            "batchCount": 2,
+                            "activities": [
+                                {
+                                    "name": "Copy data Src to ADLS_Parquet",
+                                    "type": "Copy",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "source": {
+                                            "type": "SqlServerSource",
+                                            "sqlReaderQuery": {
+                                                "value": "@concat('Select * from ',item().TableName,' where ',item().LMD_ColumnName , ' >= ''' , item().LMD2 ,''' and ' , item().LMD_ColumnName,' <= ''',variables('DateTime'),'''')",
+                                                "type": "Expression"
+                                            },
+                                            "queryTimeout": "02:00:00",
+                                            "partitionOption": "None"
+                                        },
+                                        "sink": {
+                                            "type": "ParquetSink",
+                                            "storeSettings": {
+                                                "type": "AzureBlobFSWriteSettings"
+                                            },
+                                            "formatSettings": {
+                                                "type": "ParquetWriteSettings"
+                                            }
+                                        },
+                                        "enableStaging": false,
+                                        "translator": {
+                                            "type": "TabularTranslator",
+                                            "typeConversion": true,
+                                            "typeConversionSettings": {
+                                                "allowDataTruncation": true,
+                                                "treatBooleanAsNumber": false
+                                            }
+                                        }
+                                    },
+                                    "inputs": [
+                                        {
+                                            "referenceName": "SqlServerTable_Infy_Parameterised1",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "TableName": "@item().Tablename"
+                                            }
+                                        }
+                                    ],
+                                    "outputs": [
+                                        {
+                                            "referenceName": "Parquet_Infy1",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "FolderPath": {
+                                                    "value": "@concat('TestDatabricks','/','parquet','/',variables('DateTime'),'/',item().Tablename)",
+                                                    "type": "Expression"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "Success",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Notebook1",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[dbo].[sp_update_status]",
+                                        "storedProcedureParameters": {
+                                            "id": {
+                                                "value": {
+                                                    "value": "@item().id",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "Int32"
+                                            },
+                                            "LMD": {
+                                                "value": {
+                                                    "value": "@variables('DateTime')",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "DateTime"
+                                            },
+                                            "sorf": {
+                                                "value": "S",
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "SqlServer_Infy",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                },
+                                {
+                                    "name": "Failure",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Copy data Src to ADLS_Parquet",
+                                            "dependencyConditions": [
+                                                "Failed"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[dbo].[sp_update_status]",
+                                        "storedProcedureParameters": {
+                                            "id": {
+                                                "value": {
+                                                    "value": "@item().id",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "Int32"
+                                            },
+                                            "LMD": {
+                                                "value": {
+                                                    "value": "@variables('DateTime')",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "DateTime"
+                                            },
+                                            "sorf": {
+                                                "value": "F",
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "SqlServer_Infy",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                },
+                                {
+                                    "name": "Notebook1",
+                                    "type": "DatabricksNotebook",
+                                    "dependsOn": [
+                                        {
+                                            "activity": "Copy data Src to ADLS_Parquet",
+                                            "dependencyConditions": [
+                                                "Succeeded"
+                                            ]
+                                        }
+                                    ],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "notebookPath": "/Users/pramodh.p@datasturdy.com-backup-1/Pipeline",
+                                        "baseParameters": {
+                                            "Databasename": {
+                                                "value": "@item().DatabaseName",
+                                                "type": "Expression"
+                                            },
+                                            "Tablename": {
+                                                "value": "@item().TableName",
+                                                "type": "Expression"
+                                            },
+                                            "Column_name": {
+                                                "value": "@item().PK",
+                                                "type": "Expression"
+                                            },
+                                            "TableStatus": {
+                                                "value": "@string(item().TableStatus)",
+                                                "type": "Expression"
+                                            },
+                                            "DateTime": {
+                                                "value": "@variables('DateTime')",
+                                                "type": "Expression"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "AzureDatabricks_Infy",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "variables": {
+                    "DateTime": {
+                        "type": "String"
+                    }
+                },
+                "folder": {
+                    "name": "Infosys"
+                },
+                "annotations": [],
+                "lastPublishTime": "2022-11-22T10:34:22Z"
+            },
+            "etag": "5b000dba-0000-2000-0000-637ca5ae0000"
+        }
+    ],
+    "ADFWebActivityResponseHeaders": {
+        "Pragma": "no-cache",
+        "x-ms-correlation-request-id": "36511d03-4ea9-4eca-b817-7125ce6d64f8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "36511d03-4ea9-4eca-b817-7125ce6d64f8",
+        "x-ms-routing-request-id": "WESTINDIA:20221123T091129Z:36511d03-4ea9-4eca-b817-7125ce6d64f8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "Cache-Control": "no-cache",
+        "Date": "Wed, 23 Nov 2022 09:11:28 GMT",
+        "Server": "Kestrel",
+        "Content-Length": "130116",
+        "Content-Type": "application/json; charset=utf-8",
+        "Expires": "-1"
+    },
+    "effectiveIntegrationRuntime": "AutoResolveIntegrationRuntime (Central India)",
+    "executionDuration": 0,
+    "durationInQueue": {
+        "integrationRuntimeQueue": 0
+    },
+    "billingReference": {
+        "activityType": "ExternalActivity",
+        "billableDuration": [
+            {
+                "meterType": "AzureIR",
+                "duration": 0.016666666666666666,
+                "unit": "Hours"
+            }
+        ]
+    }
+}

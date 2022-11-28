@@ -1,0 +1,564 @@
+{
+    "value": [
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/src_connect",
+            "name": "src_connect",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobFS",
+                "typeProperties": {
+                    "url": "https://suthdemo.dfs.core.windows.net/",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl81ZGQ4MTNiZC03NjFiLTRjZDQtYTRmYy01OTRiOGRkYzQwMTYiDQp9"
+                }
+            },
+            "etag": "aa00661b-0000-2000-0000-62a17e290000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/dest_connect",
+            "name": "dest_connect",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobFS",
+                "typeProperties": {
+                    "url": "https://bcpdr.dfs.core.windows.net/",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl84YTQxZGFiMi1kNTAxLTRiNzgtYWI4MS01Y2RlNmRjN2VkNmYiDQp9"
+                }
+            },
+            "etag": "aa00aa1b-0000-2000-0000-62a17e630000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/sourcebill",
+            "name": "sourcebill",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobFS",
+                "typeProperties": {
+                    "url": "https://billingdetailsresource.dfs.core.windows.net/",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl80OWFkN2NlNy1jZWQzLTRlOTAtYjQ5Yi1kYzI0NGQwYjllZDMiDQp9"
+                }
+            },
+            "etag": "0e00142a-0000-2000-0000-62c7c3350000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/srcbill",
+            "name": "srcbill",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobStorage",
+                "typeProperties": {
+                    "connectionString": "DefaultEndpointsProtocol=https;AccountName=billingdetailsresource;EndpointSuffix=core.windows.net;",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl85ZmRhNmFjMS00NmY5LTQyOWItYjZlOC0wYzlkZjY4MDAwMGQiDQp9"
+                }
+            },
+            "etag": "0e008f4c-0000-2000-0000-62c7e3010000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/AzureBlobStorage1",
+            "name": "AzureBlobStorage1",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobStorage",
+                "typeProperties": {
+                    "connectionString": "DefaultEndpointsProtocol=https;AccountName=training005;EndpointSuffix=core.windows.net;",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl84ZTczZGUzMy0xZjBmLTQyZTgtODU4ZS0wYjYyNGVjYzgyMjciDQp9"
+                }
+            },
+            "etag": "300008b5-0000-2000-0000-62df80950000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/SqlServer1",
+            "name": "SqlServer1",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "SqlServer",
+                "typeProperties": {
+                    "connectionString": "integrated security=False;data source=40.80.82.167;initial catalog=DF_Test;user id=anamika",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl8yNDFjYzdhZS04N2UxLTQyZGYtOTQzOC00NTgxMzUyMDFiNmQiDQp9"
+                }
+            },
+            "etag": "920018bb-0000-2000-0000-63466abb0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/linkedService1",
+            "name": "linkedService1",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobStorage",
+                "typeProperties": {
+                    "connectionString": "DefaultEndpointsProtocol=https;AccountName=infosysbipocstg;EndpointSuffix=core.windows.net;",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl82NDVhOThhNS00ZjRlLTQzYzUtYmEzYy0zNTljOTUyODk5NDQiDQp9"
+                }
+            },
+            "etag": "0600182a-0000-2000-0000-63522a5e0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/AzureKeyVault1",
+            "name": "AzureKeyVault1",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureKeyVault",
+                "typeProperties": {
+                    "baseUrl": "https://mlops3866208991.vault.azure.net/"
+                }
+            },
+            "etag": "340059e3-0000-2000-0000-62e0e5c00000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/Sftp1",
+            "name": "Sftp1",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "parameters": {
+                    "abc": {
+                        "type": "String",
+                        "defaultValue": "abc"
+                    },
+                    "abcd": {
+                        "type": "String",
+                        "defaultValue": "abcd"
+                    },
+                    "cba": {
+                        "type": "String",
+                        "defaultValue": "cba"
+                    },
+                    "host": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "type": "Sftp",
+                "typeProperties": {
+                    "host": "@{linkedService().host}",
+                    "port": 22,
+                    "skipHostKeyValidation": true,
+                    "authenticationType": "Basic",
+                    "userName": "@{linkedService().cba}",
+                    "password": {
+                        "type": "AzureKeyVaultSecret",
+                        "store": {
+                            "referenceName": "AzureKeyVault1",
+                            "type": "LinkedServiceReference"
+                        },
+                        "secretName": {
+                            "value": "@linkedService().abc",
+                            "type": "Expression"
+                        },
+                        "secretVersion": {
+                            "value": "@linkedService().abcd",
+                            "type": "Expression"
+                        }
+                    }
+                }
+            },
+            "etag": "340064e3-0000-2000-0000-62e0e5c00000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/AzureSqlDatabase1",
+            "name": "AzureSqlDatabase1",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureSqlDatabase",
+                "typeProperties": {
+                    "connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=sutherland-server.database.windows.net;initial catalog=sutherland-database;user id=azureuser",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl9mZTE0MTllZS1kY2YzLTQyNWMtOTAxYi0xZjRjZmU1YWQxY2QiDQp9"
+                }
+            },
+            "etag": "1400976b-0000-2000-0000-62ea56e90000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/Snowflake1",
+            "name": "Snowflake1",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "Snowflake",
+                "typeProperties": {
+                    "connectionString": "jdbc:snowflake://ixinxaj-kw39499.snowflakecomputing.com/?user=NAVEENSINGH&db=SNOWFLAKE&warehouse=XSMALLWAREHOUSE&role=accountadmin",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl80ZTE0NWM3My0zYmFkLTRiOWItYWU5NC05YjY4OWU3ODEzYTciDQp9"
+                }
+            },
+            "etag": "920018ad-0000-2000-0000-634668cb0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/SuthPostgre",
+            "name": "SuthPostgre",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzurePostgreSql",
+                "typeProperties": {
+                    "connectionString": "host=40.80.82.167;port=5432;database=airbyte;uid=postgres;encryptionmethod=0",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl83ODFjNTk5Mi0yZDk5LTQxZDgtYTM0Yi0yZDJlNjUwMWU4MDkiDQp9"
+                }
+            },
+            "etag": "0200d225-0000-2000-0000-6347c4f60000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/sqlserverVM",
+            "name": "sqlserverVM",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "SqlServer",
+                "typeProperties": {
+                    "connectionString": "integrated security=False;data source=40.80.82.167;initial catalog=testdb;user id=sa",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl9iZTQ2NmJiNS1lYmY4LTQyOTQtYjQ0MC02NTVjZGYzNDJkZDkiDQp9"
+                }
+            },
+            "etag": "0400378f-0000-2000-0000-63491fac0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/SqlServer_Infy",
+            "name": "SqlServer_Infy",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "SqlServer",
+                "typeProperties": {
+                    "connectionString": "integrated security=False;data source=40.80.82.167;initial catalog=Databricks;user id=sakib",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl83MjQwMmY1Ny0wNDZhLTQyZmYtOTJiYS1hNDE0YWQyMjk0YTAiDQp9"
+                }
+            },
+            "etag": "5500c70b-0000-2000-0000-637b567d0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/AzureDataLakeStorage1",
+            "name": "AzureDataLakeStorage1",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobFS",
+                "typeProperties": {
+                    "url": "https://infosysbipocstg.dfs.core.windows.net/",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl9kOTNmNDk1OS03MDk5LTQwNWMtYjA3NS0yMzUyMzlhODQyM2IiDQp9"
+                }
+            },
+            "etag": "0100dad1-0000-2000-0000-634ff0bb0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/AzureDataLakeStorage2_Infy",
+            "name": "AzureDataLakeStorage2_Infy",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobFS",
+                "typeProperties": {
+                    "url": "https://infosysbipocstg.dfs.core.windows.net/",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl9mM2FmODY2MS0zNTg0LTRjYWEtYjBlNi0wZDU4ZjBlMzE3MjgiDQp9"
+                }
+            },
+            "etag": "04003d90-0000-2000-0000-635114f60000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/ADLSGen2",
+            "name": "ADLSGen2",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobFS",
+                "typeProperties": {
+                    "url": "https://training005.dfs.core.windows.net/",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl9mZDE4ZmY2Yi1iYWIzLTQyYzYtYWE0NC0xODA0NjM2MTM2ZjMiDQp9"
+                }
+            },
+            "etag": "0e004e05-0000-2000-0000-635a546b0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/PostgreSql1",
+            "name": "PostgreSql1",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "PostgreSql",
+                "typeProperties": {
+                    "connectionString": "host=kafka-demo-002;port=5432;database=airbyte;uid=azureuser;encryptionmethod=0",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl83ZTg2ZmExNy1hYjhkLTQ1MmMtYmY3ZC0yNzQ0NTI5ZDEzNjAiDQp9"
+                }
+            },
+            "etag": "0f001222-0000-2000-0000-635b63fa0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/PostgreSql2",
+            "name": "PostgreSql2",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "PostgreSql",
+                "typeProperties": {
+                    "connectionString": "host=40.80.82.167;port=5432;database=airbyte;uid=postgres;encryptionmethod=0",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl8zYjlkM2MxNy00NmQwLTQwMjgtYTdiZC02ZmE0ZWM1MjI1YjMiDQp9"
+                }
+            },
+            "etag": "0f002925-0000-2000-0000-635b66cf0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/PostgreSql3",
+            "name": "PostgreSql3",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "PostgreSql",
+                "typeProperties": {
+                    "connectionString": "host=40.80.82.167;port=5432;database=airbyte;uid=postgres;encryptionmethod=0",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl83NDQzNGMxOC05Y2Y5LTQwMDctOWY2YS0zZjE3Mjg0ZTM5ZmYiDQp9"
+                }
+            },
+            "etag": "0f005325-0000-2000-0000-635b670e0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/PostgreSql",
+            "name": "PostgreSql",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "PostgreSql",
+                "typeProperties": {
+                    "connectionString": "host=40.80.82.167;port=5432;database=airbyte;uid=postgres;encryptionmethod=0",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl80NjY1MDNiYS04MmZlLTRhNjAtYmE0Ny1iODhhMDI2MjkzNGEiDQp9"
+                }
+            },
+            "etag": "0f008825-0000-2000-0000-635b67550000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/PostgreSql4",
+            "name": "PostgreSql4",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "PostgreSql",
+                "typeProperties": {
+                    "connectionString": "host=40.80.82.167;port=5432;database=airbyte;uid=postgres;encryptionmethod=0",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl82YWI3ZjJiMy0yMzhjLTQyNzEtYmEyZS1jNjA5Yjg5NDhkZGUiDQp9"
+                }
+            },
+            "etag": "0f00a126-0000-2000-0000-635b690b0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/PostgresqlDB",
+            "name": "PostgresqlDB",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "PostgreSql",
+                "typeProperties": {
+                    "connectionString": "host=40.80.82.167;port=5432;database=airbyte;uid=postgres;encryptionmethod=0",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl8xYjJkMmM4Ny1iNjUwLTQ3ODgtODFkMC05M2IwZTQwNTk1ODMiDQp9"
+                }
+            },
+            "etag": "0f000d37-0000-2000-0000-635b78de0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/Sink_DB_Infy_test",
+            "name": "Sink_DB_Infy_test",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "SqlServer",
+                "typeProperties": {
+                    "connectionString": "integrated security=False;data source=40.80.82.167;initial catalog=TestDB;user id=sa",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl9iMjJkNGExNS1iMzhlLTQ1ZWUtYjcwZi1jMzM3ZGRlN2NlY2YiDQp9"
+                }
+            },
+            "etag": "0f00da3b-0000-2000-0000-635b7cc50000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/Sink_Sql_Server_Infy_test",
+            "name": "Sink_Sql_Server_Infy_test",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "SqlServer",
+                "typeProperties": {
+                    "connectionString": "integrated security=False;data source=40.80.82.167;initial catalog=InfyProject;user id=anamika",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl8yM2Q4YWIxZC1iZWQ1LTQ5MzMtOWJjNy02MmMxOGUyMzdiMDYiDQp9"
+                }
+            },
+            "etag": "0f00703f-0000-2000-0000-635b7fb10000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/AzureDatabricks_Infy",
+            "name": "AzureDatabricks_Infy",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureDatabricks",
+                "typeProperties": {
+                    "domain": "https://adb-3436031575846389.9.azuredatabricks.net",
+                    "existingClusterId": "1026-052502-5ayr3d5g",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl83NGU3MzcyNi03ODM5LTQ2NGQtYjk5Ny1jMTczZjA0OGE3MjgiDQp9"
+                }
+            },
+            "etag": "21003c58-0000-2000-0000-636b42cf0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/AzureDataLakeStorage2",
+            "name": "AzureDataLakeStorage2",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobFS",
+                "typeProperties": {
+                    "url": "https://infosysbipocstg.dfs.core.windows.net/",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl82YTk0ZDAzMi1lODU5LTRjNTQtYjNmZi1lZmEwZjJiNjNjNmQiDQp9"
+                }
+            },
+            "etag": "14000a9f-0000-2000-0000-6360de500000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/serverlesspool",
+            "name": "serverlesspool",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "SqlServer",
+                "typeProperties": {
+                    "connectionString": "integrated security=False;data source=infosysbipocws0190-ondemand.sql.azuresynapse.net;initial catalog=test;user id=adf_user",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl9mOTJmZDYwOC04NWU3LTRhYmMtYTg1ZC0wMzc5MjljY2QxYWMiDQp9"
+                }
+            },
+            "etag": "1500e700-0000-2000-0000-63612abf0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/traininggen2",
+            "name": "traininggen2",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobFS",
+                "typeProperties": {
+                    "url": "https://traininggen2.dfs.core.windows.net/",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl8xYjBkMDUyZC01YjMyLTRlNzgtOGQ3OC00NjgyNTg0MGRiNjQiDQp9"
+                }
+            },
+            "etag": "1500b401-0000-2000-0000-63612b5a0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/KafkaVM_SQL_Server",
+            "name": "KafkaVM_SQL_Server",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "SqlServer",
+                "typeProperties": {
+                    "connectionString": "integrated security=False;data source=40.80.82.167;initial catalog=adventureworks2017;user id=sa",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl9mNjE3OTRhOS1lZTA1LTQ2NjktOGI3Yy1iMTQxZDEwMTQ5ZjgiDQp9"
+                }
+            },
+            "etag": "1d009419-0000-2000-0000-6367d2100000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/ls_sqlserver_training",
+            "name": "ls_sqlserver_training",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "parameters": {
+                    "database_name": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "type": "SqlServer",
+                "typeProperties": {
+                    "connectionString": "integrated security=False;data source=40.80.82.167;initial catalog=@{linkedService().database_name};user id=anamika",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl8zN2EyNWQ1ZC0zNTI3LTQ0YTYtYWUyYi1hYzA4ODUxZDljMTciDQp9"
+                }
+            },
+            "etag": "1d0053f5-0000-2000-0000-636896dd0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/ls_postgresql_training",
+            "name": "ls_postgresql_training",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzurePostgreSql",
+                "typeProperties": {
+                    "connectionString": "host=40.80.82.167;port=5432;database=airbyte;uid=postgres;encryptionmethod=0",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl83NjU1Mzg1My02MGE4LTQ1NjktOGQ2NS1mNzU4ZWRkZDNkMGIiDQp9"
+                }
+            },
+            "etag": "18004584-0000-2000-0000-6363e3a30000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/adls_delta_sink",
+            "name": "adls_delta_sink",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobFS",
+                "typeProperties": {
+                    "url": "https://traininggen2.dfs.core.windows.net/",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl82ZmQ5OTJmMi04MWZmLTQzMTAtOWQ1MC1jMGEyNjkzNmFkNGQiDQp9"
+                }
+            },
+            "etag": "18006aa6-0000-2000-0000-636401750000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/adls_delta_table",
+            "name": "adls_delta_table",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobStorage",
+                "typeProperties": {
+                    "connectionString": "DefaultEndpointsProtocol=https;AccountName=traininggen2;EndpointSuffix=core.windows.net;",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl85MjIwYTVkNy0yMDczLTRiYzEtYTE3YS1kNzQ1Yjk1ZTQzODAiDQp9"
+                }
+            },
+            "etag": "1b00799f-0000-2000-0000-636679cb0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/linkedservices/mll_ls_sqlserver_training",
+            "name": "mll_ls_sqlserver_training",
+            "type": "Microsoft.DataFactory/factories/linkedservices",
+            "properties": {
+                "annotations": [],
+                "type": "SqlServer",
+                "typeProperties": {
+                    "connectionString": "integrated security=False;data source=mll-datalake-hyperscale.database.windows.net;initial catalog=MLL-Datalake_hyperscale;user id=mllsqladmin",
+                    "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDhBNDcyRjFELUJBOTEtNDY5RS1CQzRFLTY1RDM3ODA0QzZDRl8wZWVkODVlZS05Mzk0LTRjNjEtYTVmOC0yYTQwMGJmZjY5NDQiDQp9"
+                }
+            },
+            "etag": "1c008def-0000-2000-0000-6367a5b40000"
+        }
+    ],
+    "ADFWebActivityResponseHeaders": {
+        "Pragma": "no-cache",
+        "x-ms-correlation-request-id": "3b309b5c-1b44-4593-b319-cad79f9a309f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "3b309b5c-1b44-4593-b319-cad79f9a309f",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20221122T060056Z:3b309b5c-1b44-4593-b319-cad79f9a309f",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "Cache-Control": "no-cache",
+        "Date": "Tue, 22 Nov 2022 06:00:56 GMT",
+        "Server": "Kestrel",
+        "Content-Length": "31222",
+        "Content-Type": "application/json; charset=utf-8",
+        "Expires": "-1"
+    },
+    "effectiveIntegrationRuntime": "AutoResolveIntegrationRuntime (Central India)",
+    "executionDuration": 1,
+    "durationInQueue": {
+        "integrationRuntimeQueue": 0
+    },
+    "billingReference": {
+        "activityType": "ExternalActivity",
+        "billableDuration": [
+            {
+                "meterType": "AzureIR",
+                "duration": 0.016666666666666666,
+                "unit": "Hours"
+            }
+        ]
+    }
+}
