@@ -1,0 +1,908 @@
+{
+    "value": [
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/SqlServerTable1",
+            "name": "SqlServerTable1",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "id",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "Tablename",
+                        "type": "varchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": ""
+                }
+            },
+            "etag": "3400f3f9-0000-2000-0000-62e0ebcb0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/SqlServerTable2",
+            "name": "SqlServerTable2",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "Tablename": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": {
+                        "value": "@dataset().Tablename",
+                        "type": "Expression"
+                    }
+                }
+            },
+            "etag": "3500633b-0000-2000-0000-62e0fede0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/src",
+            "name": "src",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "src_connect",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "DelimitedText",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobFSLocation",
+                        "fileName": "script.sql",
+                        "fileSystem": "src"
+                    },
+                    "columnDelimiter": ",",
+                    "escapeChar": "\\",
+                    "quoteChar": "\""
+                },
+                "schema": [
+                    {
+                        "type": "String"
+                    }
+                ]
+            },
+            "etag": "17003565-0000-2000-0000-62ecb6520000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/dest",
+            "name": "dest",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "dest_connect",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "DelimitedText",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobFSLocation",
+                        "fileSystem": "dest"
+                    },
+                    "columnDelimiter": ",",
+                    "escapeChar": "\\",
+                    "quoteChar": "\""
+                },
+                "schema": []
+            },
+            "etag": "17003b65-0000-2000-0000-62ecb6520000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/SqlServerTable11",
+            "name": "SqlServerTable11",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "id",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "Tablename",
+                        "type": "varchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": ""
+                }
+            },
+            "etag": "1f006acb-0000-2000-0000-62f35a3e0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/DelimitedText1",
+            "name": "DelimitedText1",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "Tablename": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "type": "DelimitedText",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "fileName": {
+                            "value": "@dataset().Tablename",
+                            "type": "Expression"
+                        },
+                        "folderPath": "testdata",
+                        "container": "delta-lake"
+                    },
+                    "columnDelimiter": ",",
+                    "escapeChar": "\\",
+                    "quoteChar": "\""
+                },
+                "schema": []
+            },
+            "etag": "1f006ccb-0000-2000-0000-62f35a3f0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/SqlServerTable21",
+            "name": "SqlServerTable21",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "Tablename": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": {
+                        "value": "@dataset().Tablename",
+                        "type": "Expression"
+                    }
+                }
+            },
+            "etag": "1f0072cb-0000-2000-0000-62f35a3f0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/CompressFilePath",
+            "name": "CompressFilePath",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "DelimitedText",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "fileName": "export - Copy.zip",
+                        "container": "compressfiletest"
+                    },
+                    "columnDelimiter": ",",
+                    "compressionCodec": "ZipDeflate",
+                    "escapeChar": "\\",
+                    "firstRowAsHeader": true,
+                    "quoteChar": "\""
+                },
+                "schema": []
+            },
+            "etag": "3900e698-0000-2000-0000-63042bae0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/DecompressFileDump",
+            "name": "DecompressFileDump",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "DelimitedText",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "fileName": "Decompress",
+                        "container": "compressfiletest"
+                    },
+                    "columnDelimiter": ",",
+                    "escapeChar": "\\",
+                    "firstRowAsHeader": true,
+                    "quoteChar": "\""
+                },
+                "schema": []
+            },
+            "etag": "3900e898-0000-2000-0000-63042bae0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/Excel1",
+            "name": "Excel1",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Excel",
+                "typeProperties": {
+                    "sheetName": "sheet1",
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "fileName": "*.xlsx",
+                        "container": "demotest"
+                    },
+                    "firstRowAsHeader": true
+                },
+                "schema": []
+            },
+            "etag": "4d00aa49-0000-2000-0000-630fa0230000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/SqlServerTable22",
+            "name": "SqlServerTable22",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "id",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "name",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "dept",
+                        "type": "int",
+                        "precision": 10
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "testemp"
+                }
+            },
+            "etag": "4d00ac49-0000-2000-0000-630fa0230000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/SnowflakeTable1",
+            "name": "SnowflakeTable1",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Snowflake1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SnowflakeTable",
+                "schema": [
+                    {
+                        "name": "QUERY_ID",
+                        "type": "VARCHAR",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "QUERY_START_TIME",
+                        "type": "TIMESTAMP_LTZ",
+                        "precision": 26,
+                        "scale": 6
+                    },
+                    {
+                        "name": "USER_NAME",
+                        "type": "VARCHAR",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "DIRECT_OBJECTS_ACCESSED",
+                        "type": "ARRAY",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "BASE_OBJECTS_ACCESSED",
+                        "type": "ARRAY",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "OBJECTS_MODIFIED",
+                        "type": "ARRAY",
+                        "precision": 0,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "ACCOUNT_USAGE",
+                    "table": "ACCESS_HISTORY"
+                }
+            },
+            "etag": "9300d2b9-0000-2000-0000-6346826e0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/AzurePostgreSqlTable1",
+            "name": "AzurePostgreSqlTable1",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SuthPostgre",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzurePostgreSqlTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": "public",
+                    "table": "employees"
+                }
+            },
+            "etag": "0200a48a-0000-2000-0000-6347f45f0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/Parquet1",
+            "name": "Parquet1",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Parquet",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "container": "delta-lake"
+                    },
+                    "compressionCodec": "snappy"
+                },
+                "schema": []
+            },
+            "etag": "0200392d-0000-2000-0000-6347c9aa0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/SqlServerTable_Infy",
+            "name": "SqlServerTable_Infy",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer_Infy",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Infy_ConfigTable"
+                }
+            },
+            "etag": "040076b0-0000-2000-0000-635131350000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/SqlServerTable_Infy_Parameterised",
+            "name": "SqlServerTable_Infy_Parameterised",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer_Infy",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "TableName": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": {
+                        "value": "@dataset().TableName",
+                        "type": "Expression"
+                    }
+                }
+            },
+            "etag": "04007cb0-0000-2000-0000-635131350000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/Parquet_Infy",
+            "name": "Parquet_Infy",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureDataLakeStorage2_Infy",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "FolderPath": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "type": "Parquet",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobFSLocation",
+                        "folderPath": {
+                            "value": "@dataset().FolderPath",
+                            "type": "Expression"
+                        },
+                        "fileSystem": "infosysbipocazfile"
+                    },
+                    "compressionCodec": "snappy"
+                },
+                "schema": []
+            },
+            "etag": "1200de59-0000-2000-0000-635eb8390000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/ds_blob_csv_training",
+            "name": "ds_blob_csv_training",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "ADLSGen2",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "DelimitedText",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobFSLocation",
+                        "fileName": "annual-enterprise-survey-2021-financial-year-provisional-csv.csv",
+                        "folderPath": "csv",
+                        "fileSystem": "azure-blob-to-aws-s3"
+                    },
+                    "columnDelimiter": ",",
+                    "escapeChar": "\\",
+                    "firstRowAsHeader": true,
+                    "quoteChar": "\""
+                },
+                "schema": []
+            },
+            "etag": "2300c303-0000-2000-0000-636c86c90000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/ds_blob_parquet_training",
+            "name": "ds_blob_parquet_training",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "ADLSGen2",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Parquet",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobFSLocation",
+                        "fileSystem": "azure-blob-to-aws-s3"
+                    },
+                    "compressionCodec": "snappy"
+                },
+                "schema": []
+            },
+            "etag": "1900a07a-0000-2000-0000-6364ae760000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/ds_blob_excel_training",
+            "name": "ds_blob_excel_training",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "ADLSGen2",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Excel",
+                "typeProperties": {
+                    "sheetName": "Instructions",
+                    "location": {
+                        "type": "AzureBlobFSLocation",
+                        "fileName": "SampleData.xlsx",
+                        "folderPath": "excel",
+                        "fileSystem": "azure-blob-to-aws-s3"
+                    }
+                },
+                "schema": [
+                    {
+                        "type": "String"
+                    },
+                    {
+                        "type": "String"
+                    },
+                    {
+                        "type": "String"
+                    },
+                    {
+                        "type": "String"
+                    }
+                ]
+            },
+            "etag": "1900a27a-0000-2000-0000-6364ae760000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/ds_blob_json_training",
+            "name": "ds_blob_json_training",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "ADLSGen2",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Json",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobFSLocation",
+                        "fileName": "sample4.json",
+                        "folderPath": "json",
+                        "fileSystem": "azure-blob-to-aws-s3"
+                    }
+                },
+                "schema": {}
+            },
+            "etag": "2300962d-0000-2000-0000-636cac370000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/ds_postgresql_training",
+            "name": "ds_postgresql_training",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "ls_postgresql_training",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzurePostgreSqlTable",
+                "schema": [],
+                "typeProperties": {}
+            },
+            "etag": "19007d7c-0000-2000-0000-6364afdf0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/ds_sqlserver_training",
+            "name": "ds_sqlserver_training",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "ls_sqlserver_training",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [],
+                "typeProperties": {}
+            },
+            "etag": "19007f7c-0000-2000-0000-6364afdf0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/mll_ds_sqlserver_training",
+            "name": "mll_ds_sqlserver_training",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "mll_ls_sqlserver_training",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": "metastore",
+                    "table": "configtable"
+                }
+            },
+            "etag": "1b0010b5-0000-2000-0000-636691240000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/mll_meta_table_ds_sqlserver_training",
+            "name": "mll_meta_table_ds_sqlserver_training",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "mll_ls_sqlserver_training",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "id",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "ApplicationName",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "SourceDetails",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "QueryText",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "DestinationDetails",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "success_failure",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "ErrorMsg",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "FolderPath",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "Pipeline_Name",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LMD",
+                        "type": "datetime",
+                        "precision": 23,
+                        "scale": 3
+                    },
+                    {
+                        "name": "LMD_H_DL",
+                        "type": "datetime",
+                        "precision": 23,
+                        "scale": 3
+                    },
+                    {
+                        "name": "Previous_state",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "success_failure_H_DL",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "previous_state_H_DL",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "ErrorMsg_H_DL",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "Pipeline_Name_H_DL",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "MAX_ID",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "MIN_ID",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "MAX_ID_H_DL",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "MIN_ID_H_DL",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "Primarykey",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LMD_src_DL",
+                        "type": "datetime",
+                        "precision": 23,
+                        "scale": 3
+                    },
+                    {
+                        "name": "success_failure_src_DL",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "previous_state_src_DL",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "ErrorMsg_src_DL",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "Pipeline_Name_src_DL",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "Max_ID_src_DL",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "Min_ID_src_DL",
+                        "type": "varchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "metastore",
+                    "table": "configtable"
+                }
+            },
+            "etag": "1c00b5ef-0000-2000-0000-6367a5ee0000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/mll_source_ds_sqlserver_training",
+            "name": "mll_source_ds_sqlserver_training",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "mll_ls_sqlserver_training",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [],
+                "typeProperties": {}
+            },
+            "etag": "1c0091fa-0000-2000-0000-6367b1650000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/SqlServerTable_Infy1",
+            "name": "SqlServerTable_Infy1",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer_Infy",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Infy_ConfigTable"
+                }
+            },
+            "etag": "5500ec90-0000-2000-0000-637b73e30000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/SqlServerTable_Infy_Parameterised1",
+            "name": "SqlServerTable_Infy_Parameterised1",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer_Infy",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "TableName": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": {
+                        "value": "@dataset().TableName",
+                        "type": "Expression"
+                    }
+                }
+            },
+            "etag": "5500f090-0000-2000-0000-637b73e30000"
+        },
+        {
+            "id": "/subscriptions/014c1e27-3770-4ec2-b5b6-ea4c97ba666c/resourceGroups/Devops/providers/Microsoft.DataFactory/factories/Dev-ops-1/datasets/Parquet_Infy1",
+            "name": "Parquet_Infy1",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureDataLakeStorage2_Infy",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "FolderPath": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "type": "Parquet",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobFSLocation",
+                        "folderPath": {
+                            "value": "@dataset().FolderPath",
+                            "type": "Expression"
+                        },
+                        "fileSystem": "infosysbipocazfile"
+                    },
+                    "compressionCodec": "snappy"
+                },
+                "schema": []
+            },
+            "etag": "5500f990-0000-2000-0000-637b73e40000"
+        }
+    ],
+    "ADFWebActivityResponseHeaders": {
+        "Pragma": "no-cache",
+        "x-ms-correlation-request-id": "154aa2ef-0661-4f12-adaa-84c0edfa816b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "154aa2ef-0661-4f12-adaa-84c0edfa816b",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20221123T071620Z:154aa2ef-0661-4f12-adaa-84c0edfa816b",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "Cache-Control": "no-cache",
+        "Date": "Wed, 23 Nov 2022 07:16:20 GMT",
+        "Server": "Kestrel",
+        "Content-Length": "27557",
+        "Content-Type": "application/json; charset=utf-8",
+        "Expires": "-1"
+    },
+    "effectiveIntegrationRuntime": "AutoResolveIntegrationRuntime (Central India)",
+    "executionDuration": 1,
+    "durationInQueue": {
+        "integrationRuntimeQueue": 0
+    },
+    "billingReference": {
+        "activityType": "ExternalActivity",
+        "billableDuration": [
+            {
+                "meterType": "AzureIR",
+                "duration": 0.016666666666666666,
+                "unit": "Hours"
+            }
+        ]
+    }
+}
